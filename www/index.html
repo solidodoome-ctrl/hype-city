@@ -10,7 +10,23 @@ button{border:1px solid #ffffff80;background:#121b3dcc;color:white;border-radius
 #cover{position:fixed;inset:0;display:grid;place-items:center;background:#101735bb;color:white;text-align:center;padding:20px}
 .card{background:#111a39ee;border:1px solid #ffffff55;border-radius:25px;padding:28px;max-width:420px}.card h1{font-size:60px;line-height:.9;margin:0}.card h1 span{color:#5cf0ff}.card p{line-height:1.5;color:#dce7ff}.card button{padding:14px 25px;border-radius:30px;background:linear-gradient(90deg,#5cf0ff,#baffdf);color:#111a39;font-size:16px}
 </style></head><body><div id="game"></div><div id="brand">HYPE<b>CITY</b></div><div id="score">🪙 <span id="coins">0</span></div><div id="tip">Explore the city and collect glowing coins</div>
-<div id="pad"><button id="up">▲</button><button id="left">◀</button><button id="down">▼</button><button id="right">▶</button></div><button id="jump">JUMP</button>
+<div id="pad">
+  <button id="up">▲</button>
+  <button id="left">◀</button>
+  <button id="down">▼</button>
+  <button id="right">▶</button>
+</div>
+
+<div id="hypeJoystick"><div id="joystickKnob"></div></div>
+
+<div id="actionControls">
+  <button id="attack">ATTACK</button>
+  <button id="jump">JUMP</button>
+  <button id="slide">SLIDE</button>
+  <button id="crouch">CROUCH</button>
+  <button id="switchWeapon">SWITCH</button>
+</div>
+<div id="crosshair">+</div>
 <div id="cover"><div class="card"><h1>HYPE<br><span>CITY</span></h1><p>A colorful 3D city prototype. Explore, jump, and collect coins. Your adventure starts here.</p><button id="play">ENTER THE CITY →</button><p style="font-size:11px;opacity:.7">Prototype 01 · Single-player demo</p></div></div>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
