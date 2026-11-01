@@ -12,10 +12,10 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101827;col
 canvas{display:block}
 #top{position:fixed;top:8px;left:8px;right:8px;z-index:3;display:flex;justify-content:space-between;pointer-events:none}
 .pill{background:#111d30dd;padding:9px;border-radius:15px;font-size:11px;font-weight:bold}
-#menu{position:fixed;top:52px;left:8px;z-index:5;display:flex;gap:5px;flex-wrap:wrap;max-width:95%}
+#menu{position:fixed;top:52px;left:8px;z-index:5;display:flex;gap:5px;flex-wrap:wrap;max-width:96%}
 button,select{background:#293c59;color:white;border:1px solid #ffffff66;border-radius:10px;padding:9px;font-weight:bold;font-size:11px}
 .panel{display:none;position:fixed;z-index:10;top:7%;left:4%;right:4%;max-width:500px;margin:auto;max-height:85%;overflow:auto;background:#111d30f5;border:1px solid #ffffff66;border-radius:16px;padding:14px}
-.panel h2{margin:0 0 12px}
+.panel h2{margin:0 0 12px;color:#7eeaff}
 .panel label{display:block;font-size:11px;margin:9px 0 4px;color:#cbd5e1}
 .panel select{width:100%}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -38,547 +38,397 @@ button,select{background:#293c59;color:white;border:1px solid #ffffff66;border-r
 #modePanel{display:none;position:fixed;z-index:12;inset:6% 4%;max-width:520px;margin:auto;max-height:88%;overflow:auto;background:#101a2df7;border:2px solid #51dfff;border-radius:18px;padding:15px}
 #modePanel h2{color:#7eeaff}
 .modeCard{display:flex;align-items:center;gap:10px;padding:10px;margin:8px 0;background:#ffffff12;border:1px solid #ffffff25;border-radius:12px}
-.modeIcon{font-size:24px;width:32px}
 .modeInfo{flex:1;font-size:12px;line-height:1.4}
 #modeStatus{font-size:12px;color:#9eeeff;background:#0b3144;padding:10px;border-radius:10px;margin:10px 0}
-.modeCard button{background:#087dcb}
 @media(max-width:380px){#joy{width:120px;height:120px}#knob{left:32px;top:32px}}
 </style>
 </head>
 <body>
 <div id="game"></div>
 <div id="top">
-<div class="pill">🏙️ HYPE CITY</div>
-<div class="pill" id="wallet">HYPE COIN: 100 | CRYSTAL COIN: 0</div>
+ <div class="pill">🏙️ HYPE CITY</div>
+ <div class="pill" id="wallet">HYPE COIN: 100 | CRYSTAL COIN: 0</div>
 </div>
-
 <div id="menu">
-<button onclick="openPanel('avatarPanel')">AVATAR</button>
-<button onclick="openPanel('clothesPanel')">CLOTHES</button>
-<button onclick="openPanel('petsPanel')">PETS</button>
-<button onclick="openPanel('weaponsPanel')">WEAPONS</button>
-<button onclick="openModes()">🌌 MODES</button>
-<button onclick="document.getElementById('menu').style.display='none'">HIDE</button>
+ <button onclick="openPanel('avatarPanel')">AVATAR</button>
+ <button onclick="openPanel('clothesPanel')">COSTUMES</button>
+ <button onclick="openPanel('petsPanel')">PETS</button>
+ <button onclick="openPanel('weaponsPanel')">WEAPONS</button>
+ <button onclick="openModes()">🌌 MODES</button>
+ <button onclick="document.getElementById('menu').style.display='none'">HIDE</button>
 </div>
 
 <div class="panel" id="avatarPanel">
-<h2>👑 HYPE CITY AVATAR STUDIO</h2>
-<div class="grid">
-<div><label>Character</label><select id="character"><option value="admin">JINNNYX ADMIN</option><option value="male">Male</option><option value="female">Female</option></select></div>
-<div><label>Height</label><select id="height"><option value=".8">Short</option><option value="1" selected>Normal</option><option value="1.15">Tall</option><option value="1.25">Extra tall</option></select></div>
-<div><label>Body width</label><select id="width"><option value=".8">Slim</option><option value="1" selected>Normal</option><option value="1.2">Wide</option><option value="1.35">Broad</option></select></div>
-<div><label>Skin</label><select id="skin"><option value="#f1c7a5">Light</option><option value="#c98b62">Tan</option><option value="#8b573c">Brown</option><option value="#f4d5bd">Fair</option></select></div>
-<div><label>Hair style</label><select id="hair"><option>Short</option><option>Long</option><option>Spiky</option><option>Bald</option><option>Ponytail</option></select></div>
-<div><label>Hair colour</label><select id="hairColor"><option value="#24150f">Black</option><option value="#704323">Brown</option><option value="#e5c34b">Blonde</option><option value="#c52c55">Pink</option><option value="#6d58d9">Purple</option><option value="#eeeeee">White</option></select></div>
-<div><label>Eye colour</label><select id="eyes"><option value="#202b45">Dark</option><option value="#4b9cce">Blue</option><option value="#3a9b63">Green</option><option value="#87512c">Brown</option><option value="#a45dbb">Violet</option></select></div>
-<div><label>Wings</label><select id="wings"><option value="none">None</option><option value="white">Angel</option><option value="purple">Galaxy</option><option value="gold">Golden</option></select></div>
-<div><label>Hat</label><select id="hat"><option value="none">None</option><option value="beanie">Beanie</option><option value="cap">Baseball cap</option><option value="snapback">Snapback</option><option value="bucket">Bucket hat</option></select></div>
-</div>
-<button class="wide" onclick="saveAvatar()">SAVE AVATAR</button>
-<button class="wide" onclick="closePanels()">CLOSE</button>
+ <h2>✨ ANIME AVATAR STUDIO</h2>
+ <div class="grid">
+  <div><label>Character</label><select id="character"><option value="admin">JINNNYX ADMIN</option><option value="male">Male</option><option value="female">Female</option></select></div>
+  <div><label>Height</label><select id="height"><option value=".85">Short</option><option value="1" selected>Normal</option><option value="1.15">Tall</option></select></div>
+  <div><label>Body width</label><select id="width"><option value=".85">Slim</option><option value="1" selected>Normal</option><option value="1.2">Wide</option></select></div>
+  <div><label>Skin</label><select id="skin"><option value="#f1c7a5">Light</option><option value="#c98b62">Tan</option><option value="#8b573c">Brown</option><option value="#f4d5bd">Fair</option></select></div>
+  <div><label>Hair style</label><select id="hair"><option>Short</option><option>Long</option><option>Spiky</option><option>Bald</option><option>Ponytail</option></select></div>
+  <div><label>Hair colour</label><select id="hairColor"><option value="#24150f">Black</option><option value="#704323">Brown</option><option value="#e5c34b">Blonde</option><option value="#c52c55">Pink</option><option value="#6d58d9">Purple</option><option value="#eeeeee">White</option></select></div>
+  <div><label>Eye colour</label><select id="eyes"><option value="#202b45">Dark</option><option value="#4b9cce">Blue</option><option value="#3a9b63">Green</option><option value="#87512c">Brown</option><option value="#a45dbb">Violet</option></select></div>
+  <div><label>Wings</label><select id="wings"><option value="none">None</option><option value="white">Angel</option><option value="purple">Galaxy</option><option value="gold">Golden</option></select></div>
+  <div><label>Hat</label><select id="hat"><option value="none">None</option><option value="beanie">Beanie</option><option value="cap">Cap</option></select></div>
+ </div>
+ <button class="wide" onclick="saveAvatar()">SAVE AVATAR</button>
+ <button class="wide" onclick="closePanels()">CLOSE</button>
 </div>
 
 <div class="panel" id="clothesPanel">
-<h2>👕 FREE CLOTHING SHOP</h2>
-<p style="font-size:11px">Limited free designs and colours.</p>
-<div id="clothesList"></div>
-<button class="wide" onclick="closePanels()">CLOSE</button>
+ <h2>👑 COSTUME COLLECTION</h2>
+ <div id="clothesList"></div>
+ <button class="wide" onclick="closePanels()">CLOSE</button>
 </div>
-
 <div class="panel" id="petsPanel">
-<h2>🐉 CRYSTAL PET SHOP</h2>
-<div id="petsList"></div>
-<button class="wide" onclick="closePanels()">CLOSE</button>
+ <h2>🐉 PET COMPANIONS</h2>
+ <div id="petsList"></div>
+ <button class="wide" onclick="closePanels()">CLOSE</button>
 </div>
-
 <div class="panel" id="weaponsPanel">
-<h2>⚡ WEAPON SHOP</h2>
-<div id="weaponsList"></div>
-<button class="wide" onclick="closePanels()">CLOSE</button>
+ <h2>⚡ WEAPON SKINS</h2>
+ <div id="weaponsList"></div>
+ <button class="wide" onclick="closePanels()">CLOSE</button>
 </div>
-
 <div id="portalHint">✨ GAME MODE PORTAL NEARBY<br><button onclick="openModes()">ENTER PORTAL</button></div>
-
 <div id="modePanel">
-<h2>🌌 HYPE CITY — GAME MODE PORTAL</h2>
-<p style="font-size:12px;color:#cbd5e1">Choose a mode. These are local practice prototypes, not online multiplayer.</p>
-<div id="modeStatus">Welcome! Choose your adventure.</div>
-<div id="modeList"></div>
-<button class="wide" onclick="closeModes()">BACK TO CITY</button>
+ <h2>🌌 HYPE CITY PORTAL</h2>
+ <p style="font-size:12px;color:#cbd5e1">Local practice modes. Online multiplayer is not connected.</p>
+ <div id="modeStatus">Choose your adventure!</div>
+ <div id="modeList"></div>
+ <button class="wide" onclick="closeModes()">BACK TO CITY</button>
 </div>
-
 <div id="cross"></div>
 <div id="joy"><div id="knob"></div></div>
 <div id="controls">
-<button class="ctrl" id="fire">FIRE</button>
-<button class="ctrl" id="jump">JUMP</button>
-<button class="ctrl" id="crouch">DUCK</button>
-<button class="ctrl" id="slide">SLIDE</button>
-<button class="ctrl" id="swap">SWAP</button>
+ <button class="ctrl" id="fire">FIRE</button>
+ <button class="ctrl" id="jump">JUMP</button>
+ <button class="ctrl" id="crouch">DUCK</button>
+ <button class="ctrl" id="slide">SLIDE</button>
+ <button class="ctrl" id="swap">SWAP</button>
 </div>
 
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
 const $=id=>document.getElementById(id);
-const $$=s=>[...document.querySelectorAll(s)];
-
-window.openPanel=id=>{
- $$('.panel').forEach(p=>p.style.display='none');
- $(id).style.display='block';
-};
-window.closePanels=()=>$$('.panel').forEach(p=>p.style.display='none');
-window.openModes=()=>{
- $('modePanel').style.display='block';
- $('portalHint').style.display='none';
-};
+const allPanels=()=>document.querySelectorAll('.panel');
+window.openPanel=id=>{allPanels().forEach(p=>p.style.display='none');$(id).style.display='block'};
+window.closePanels=()=>allPanels().forEach(p=>p.style.display='none');
+window.openModes=()=>{$('modePanel').style.display='block';$('portalHint').style.display='none'};
 window.closeModes=()=>{$('modePanel').style.display='none'};
 
 let hype=100,crystal=0;
-function wallet(){
- $('wallet').textContent=`HYPE COIN: ${hype} | CRYSTAL COIN: ${crystal}`;
-}
+function wallet(){$('wallet').textContent=`HYPE COIN: ${hype} | CRYSTAL COIN: ${crystal}`}
 
-/* GAME MODE PORTAL */
-const modes=[
- ['🏦','Bank Heist','Fictional vault mission and escape challenge.'],
- ['🔒','Prison Fight','Arcade prison-yard practice challenge.'],
- ['🕶️','Mafia & Gang','Create a crew identity and compete for territory in a future online version.'],
- ['🧟','Zombie Survival','Survive waves of fictional zombies and collect supplies.'],
- ['💪','Fitness Game','Run, jump, and finish movement challenges.'],
- ['⚔️','Deathmatch','Free-for-all arcade target practice.'],
- ['🏟️','Battle Arena','Enter an arena and face waves of training targets.'],
- ['🏎️','Racing','Try a city checkpoint time trial. Vehicle racing is planned for a later update.']
-];
-
-let activeMode='City';
-let modeTargets=[];
-
-modes.forEach(([icon,name,desc])=>{
- const row=document.createElement('div');
- row.className='modeCard';
- const ico=document.createElement('div');
- ico.className='modeIcon';
- ico.textContent=icon;
- const info=document.createElement('div');
- info.className='modeInfo';
- info.innerHTML='<b>'+name+'</b><br>'+desc;
- const btn=document.createElement('button');
- btn.textContent='PLAY';
- btn.onclick=()=>startMode(name,desc);
- row.append(ico,info,btn);
- $('modeList').appendChild(row);
-});
-
-window.startMode=(name,desc)=>{
- activeMode=name;
- modeTargets.forEach(t=>scene.remove(t));
- modeTargets=[];
-
- if(['Zombie Survival','Deathmatch','Battle Arena','Prison Fight'].includes(name)){
-  for(let i=0;i<5;i++){
-   const target=new THREE.Mesh(
-    new THREE.BoxGeometry(.8,1.5,.8),
-    new THREE.MeshStandardMaterial({
-     color:name==='Zombie Survival'?0x68b85a:0xe05b55
-    })
-   );
-   target.position.set((Math.random()-.5)*14,.8,-(8+Math.random()*14));
-   scene.add(target);
-   modeTargets.push(target);
-  }
- }
-
- $('modeStatus').textContent=name+' started! '+desc;
- $('modeStatus').innerHTML+='<br><br><button onclick="finishMode()">FINISH MODE +10 HYPE COINS</button>';
-};
-
-window.finishMode=()=>{
- hype+=10;
- wallet();
- $('modeStatus').textContent='Mode completed! +10 HYPE COINS. This is a local demo reward.';
- modeTargets.forEach(t=>scene.remove(t));
- modeTargets=[];
- activeMode='City';
-};
-
-/* THREE.JS CITY */
 const scene=new THREE.Scene();
-scene.background=new THREE.Color(0x91c9ed);
-scene.fog=new THREE.Fog(0x91c9ed,40,125);
-
-const camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,250);
-const renderer=new THREE.WebGLRenderer({antialias:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+scene.background=new THREE.Color(0x83c8ed);
+scene.fog=new THREE.Fog(0x83c8ed,45,120);
+const camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,220);
+const renderer=new THREE.WebGLRenderer({antialias:true, powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
 renderer.setSize(innerWidth,innerHeight);
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
 $('game').appendChild(renderer.domElement);
 
-scene.add(new THREE.HemisphereLight(0xffffff,0x53627a,2));
-const sun=new THREE.DirectionalLight(0xffffff,2);
+scene.add(new THREE.HemisphereLight(0xffffff,0x53627a,2.1));
+const sun=new THREE.DirectionalLight(0xffffff,2.2);
 sun.position.set(-20,35,15);
 scene.add(sun);
 
-const mat=c=>new THREE.MeshStandardMaterial({color:c,roughness:.8});
-function block(parent,geo,color,x,y,z){
- const m=new THREE.Mesh(geo,mat(color));
- m.position.set(x,y,z);
- parent.add(m);
- return m;
+function material(color,emissive=0){
+ return new THREE.MeshStandardMaterial({color,roughness:.62,metalness:.12,emissive,emissiveIntensity:.45});
+}
+function part(parent,geo,color,x,y,z,emissive=0){
+ const m=new THREE.Mesh(geo,material(color,emissive));
+ m.position.set(x,y,z);parent.add(m);return m;
+}
+function capsule(parent,r,len,color,x,y,z){
+ return part(parent,new THREE.CapsuleGeometry(r,len,4,10),color,x,y,z);
 }
 
-const floor=block(scene,new THREE.PlaneGeometry(190,190),'#477b55',0,-.08,0);
-floor.rotation.x=-Math.PI/2;
-
+/* CITY */
+const ground=part(scene,new THREE.PlaneGeometry(190,190),'#4c865c',0,-.1,0);
+ground.rotation.x=-Math.PI/2;
 for(let i=-3;i<=3;i++){
- const a=block(scene,new THREE.PlaneGeometry(8,190),'#303846',i*24,0,0);
- a.rotation.x=-Math.PI/2;
- const b=block(scene,new THREE.PlaneGeometry(190,8),'#303846',0,0,i*24);
- b.rotation.x=-Math.PI/2;
+ const road=part(scene,new THREE.PlaneGeometry(8,190),'#303b4b',i*24,0,0);
+ road.rotation.x=-Math.PI/2;
+ const cross=part(scene,new THREE.PlaneGeometry(190,8),'#303b4b',0,0,i*24);
+ cross.rotation.x=-Math.PI/2;
 }
-
-for(let i=0;i<95;i++){
- const x=(Math.random()-.5)*150;
- const z=(Math.random()-.5)*150;
+for(let i=0;i<75;i++){
+ const x=(Math.random()-.5)*150,z=(Math.random()-.5)*150;
  if(Math.abs(x%24)<7||Math.abs(z%24)<7)continue;
- const h=5+Math.random()*16;
- const w=4+Math.random()*5;
- block(scene,new THREE.BoxGeometry(w,h,w),
- ['#8795a8','#b2a4a0','#667c91','#d0b77e'][i%4],
- x,h/2,z);
+ const h=5+Math.random()*14,w=4+Math.random()*5;
+ const building=part(scene,new THREE.BoxGeometry(w,h,w),['#8297b2','#b5a6a0','#647c91','#d0b77e'][i%4],x,h/2,z);
+ const windows=part(scene,new THREE.BoxGeometry(w*.7,.12,.04),'#75dfff',x,h*.65,z+w/2+.025,0x126080);
 }
 
-/* PORTAL LANDMARK */
-const portal=new THREE.Group();
-portal.position.set(0,0,-15);
-scene.add(portal);
+/* PORTAL */
+const portal=new THREE.Group();portal.position.set(0,0,-15);scene.add(portal);
+const ring=part(portal,new THREE.TorusGeometry(2.2,.2,12,48),'#43eaff',0,2.5,0,0x087da8);
+const core=part(portal,new THREE.CircleGeometry(1.95,40),'#164f88',0,2.5,-.08);
+core.material.transparent=true;core.material.opacity=.7;
+part(portal,new THREE.CylinderGeometry(2.7,2.7,.25,32),'#16a6c7',0,.12,0);
 
-const ring=new THREE.Mesh(
- new THREE.TorusGeometry(2.2,.22,12,48),
- new THREE.MeshStandardMaterial({
-  color:0x35dfff,emissive:0x087da8,emissiveIntensity:1.5
- })
-);
-ring.position.y=2.5;
-portal.add(ring);
+/* ANIME AVATAR */
+const avatar=new THREE.Group();scene.add(avatar);
+const pet=new THREE.Group();scene.add(pet);
+let playerType='admin',height=1,width=1,skin='#f1c7a5';
+let hairColor='#24150f',hairStyle='Short',eyeColor='#4b9cce';
+let wing='none',hat='none',outfit='#2563eb';
+let costume='Street Star',petChoice='None',weaponIndex=0,skinIndex=0;
+let avatarParts=[];
 
-const core=new THREE.Mesh(
- new THREE.CircleGeometry(1.95,40),
- new THREE.MeshBasicMaterial({
-  color:0x164f88,transparent:true,opacity:.72,side:THREE.DoubleSide
- })
-);
-core.position.y=2.5;
-portal.add(core);
-
-const base=new THREE.Mesh(
- new THREE.CylinderGeometry(2.7,2.7,.25,32),
- mat('#16a6c7')
-);
-base.position.y=.12;
-portal.add(base);
-
-block(portal,new THREE.BoxGeometry(4.8,.7,.18),'#122e55',0,5.25,0);
-
-/* AVATAR */
-const avatar=new THREE.Group();
-scene.add(avatar);
-const pet=new THREE.Group();
-scene.add(pet);
-
-let playerType='admin',height=1,width=1;
-let skin='#f1c7a5',hairColor='#24150f',hairStyle='Short';
-let eyeColor='#202b45',wing='none',hat='none';
-let outfit='#2563eb',petChoice='None';
-
+function addAvatarPart(geo,color,x,y,z,group=avatar){
+ return part(group,geo,color,x,y,z);
+}
 function buildAvatar(){
- avatar.clear();
- block(avatar,new THREE.BoxGeometry(1.02*width,1.2,.55),outfit,0,1.55,0);
- block(avatar,new THREE.SphereGeometry(.42,18,14),skin,0,2.55,0);
- block(avatar,new THREE.BoxGeometry(.25,.72,.3),outfit,-.67*width,1.65,0);
- block(avatar,new THREE.BoxGeometry(.25,.72,.3),outfit,.67*width,1.65,0);
- block(avatar,new THREE.BoxGeometry(.36*width,.82,.38),'#25324a',-.27*width,.55,0);
- block(avatar,new THREE.BoxGeometry(.36*width,.82,.38),'#25324a',.27*width,.55,0);
- block(avatar,new THREE.BoxGeometry(.42,.16,.52),'#20242c',-.27*width,.08,.04);
- block(avatar,new THREE.BoxGeometry(.42,.16,.52),'#20242c',.27*width,.08,.04);
- block(avatar,new THREE.SphereGeometry(.06,10,8),eyeColor,-.15,2.62,.38);
- block(avatar,new THREE.SphereGeometry(.06,10,8),eyeColor,.15,2.62,.38);
-
+ avatar.clear();avatarParts=[];
+ // compact anime body and larger head
+ capsule(avatar,.43,.48,outfit,0,1.48,0);
+ capsule(avatar,.13,.24,skin,0,2.04,0);
+ addAvatarPart(new THREE.SphereGeometry(.46,24,20),skin,0,2.55,0);
+ // arms, hands and legs
+ for(const side of [-1,1]){
+  const arm=capsule(avatar,.13,.48,outfit,side*.58,1.52,0);
+  arm.rotation.z=side*.15;
+  addAvatarPart(new THREE.SphereGeometry(.14,12,10),skin,side*.62,1.19,.02);
+  capsule(avatar,.17,.48,'#26334d',side*.24,.65,0);
+  addAvatarPart(new THREE.BoxGeometry(.34,.14,.5),'#20242c',side*.24,.12,.06);
+  // anime eyes
+  addAvatarPart(new THREE.SphereGeometry(.115,16,12),'#ffffff',side*.16,2.61,.385);
+  addAvatarPart(new THREE.SphereGeometry(.078,16,12),eyeColor,side*.16,2.60,.475);
+  addAvatarPart(new THREE.SphereGeometry(.03,8,8),'#ffffff',side*.135,2.64,.53);
+ }
+ addAvatarPart(new THREE.SphereGeometry(.035,8,8),'#d98e83',0,2.49,.43);
+ addAvatarPart(new THREE.BoxGeometry(.15,.025,.02),'#873e50',0,2.38,.43);
+ // layered hair and bangs
  if(hairStyle!=='Bald'){
-  block(avatar,new THREE.SphereGeometry(.44,16,12,0,Math.PI*2,0,Math.PI*.53),hairColor,0,2.83,0);
-  if(hairStyle==='Long'||hairStyle==='Ponytail')
-   block(avatar,new THREE.BoxGeometry(.7,.8,.2),hairColor,0,2.35,-.28);
-  if(hairStyle==='Spiky')
-   for(let i=0;i<5;i++)
-    block(avatar,new THREE.ConeGeometry(.12,.42,7),hairColor,-.3+i*.15,3.12,0);
+  addAvatarPart(new THREE.SphereGeometry(.47,20,16,0,Math.PI*2,0,Math.PI*.58),hairColor,0,2.84,0);
+  for(let i=0;i<5;i++){
+   const bang=addAvatarPart(new THREE.ConeGeometry(.105,.36,7),hairColor,-.32+i*.16,2.78,.32);
+   bang.rotation.x=-.28;bang.rotation.z=(i-2)*-.12;
+  }
+  if(hairStyle==='Long'||hairStyle==='Ponytail'){
+   for(const side of [-1,1])capsule(avatar,.12,.65,hairColor,side*.37,2.35,-.12);
+  }
+  if(hairStyle==='Spiky'){
+   for(let i=0;i<6;i++){
+    const spike=addAvatarPart(new THREE.ConeGeometry(.11,.4,7),hairColor,-.3+i*.12,3.12,0);
+    spike.rotation.z=(i-2.5)*-.13;
+   }
+  }
  }
-
  if(hat!=='none'){
-  block(avatar,new THREE.CylinderGeometry(.36,.4,.18,16),
-   hat==='beanie'?'#d84b72':'#283b65',0,2.9,0);
-  block(avatar,new THREE.BoxGeometry(.48,.035,.25),'#283b65',0,2.85,.35);
+  addAvatarPart(new THREE.SphereGeometry(.43,16,10,0,Math.PI*2,0,Math.PI*.3),hat==='beanie'?'#d84b72':'#283b65',0,2.95,0);
+  addAvatarPart(new THREE.BoxGeometry(.5,.06,.28),'#283b65',0,2.82,.34);
  }
-
  if(wing!=='none'){
   const c=wing==='gold'?'#f4cf58':wing==='purple'?'#9a6bff':'#f5f7ff';
-  const l=block(avatar,new THREE.BoxGeometry(.12,.85,.9),c,-.68,2,0);
-  l.rotation.z=-.35;
-  const r=block(avatar,new THREE.BoxGeometry(.12,.85,.9),c,.68,2,0);
-  r.rotation.z=.35;
+  for(const side of [-1,1]){
+   const w=addAvatarPart(new THREE.ConeGeometry(.38,.9,8),c,side*.68,2.03,-.3);
+   w.rotation.z=side*.8;w.rotation.x=-Math.PI/2;
+  }
  }
-
- if(playerType==='admin')
-  block(avatar,new THREE.BoxGeometry(.9,.16,.08),'#f5cf4a',0,3.18,.03);
-
+ if(playerType==='admin'){
+  addAvatarPart(new THREE.BoxGeometry(.9,.13,.08),'#f5cf4a',0,3.22,.03);
+  addAvatarPart(new THREE.BoxGeometry(.25,.22,.08),'#f5cf4a',0,3.4,.03);
+ }
  avatar.scale.set(width,height,width);
 }
 buildAvatar();
 
 window.saveAvatar=()=>{
- playerType=$('character').value;
- height=+$('height').value;
- width=+$('width').value;
- skin=$('skin').value;
- hairStyle=$('hair').value;
- hairColor=$('hairColor').value;
- eyeColor=$('eyes').value;
- wing=$('wings').value;
- hat=$('hat').value;
- buildAvatar();
- closePanels();
+ playerType=$('character').value;height=+$('height').value;width=+$('width').value;
+ skin=$('skin').value;hairStyle=$('hair').value;hairColor=$('hairColor').value;
+ eyeColor=$('eyes').value;wing=$('wings').value;hat=$('hat').value;
+ buildAvatar();closePanels();
 };
 
-/* CLOTHES */
-const clothes=[
- ['T-shirt','#2563eb'],['Polo shirt','#20a477'],['Sando','#e6a52c'],
- ['Jacket','#303b55'],['Shorts','#8b55ce'],['Pants','#25324a'],
- ['Shoes','#20242c'],['Beanie','#c52c55'],['Baseball cap','#263b65'],
- ['Snapback','#6d58d9'],['Bucket hat','#c98b62']
+/* COSTUMES */
+const costumes=[
+ ['Street Star','#2563eb'],['Galaxy Guardian','#7146c9'],
+ ['Neon Samurai','#e83b70'],['Shadow Assassin','#29334b'],
+ ['Crystal Angel','#9bc9ed'],['Cyber Street King','#12a9a0'],
+ ['Lava Legend','#c84b25'],['Golden Champion','#c99a35']
 ];
-
-clothes.forEach(([name,color])=>{
- const row=document.createElement('div');
- row.className='item';
+costumes.forEach(([name,color])=>{
+ const row=document.createElement('div');row.className='item';
  row.textContent=name;
- const b=document.createElement('button');
- b.textContent='FREE · EQUIP';
- b.onclick=()=>{
-  outfit=color;
-  if(name==='Beanie')hat='beanie';
-  if(name==='Baseball cap')hat='cap';
-  if(name==='Snapback')hat='snapback';
-  if(name==='Bucket hat')hat='bucket';
-  buildAvatar();
- };
- row.appendChild(b);
- $('clothesList').appendChild(row);
+ const btn=document.createElement('button');btn.textContent='EQUIP';
+ btn.onclick=()=>{costume=name;outfit=color;buildAvatar()};
+ row.appendChild(btn);$('clothesList').appendChild(row);
 });
 
 /* PETS */
-const pets=[
- ['Tiny Dragon',80],['Kitten',35],['Puppy',35],
- ['Bunny',45],['Fox',60],['Baby Dino',70]
+const petData=[
+ ['Tiny Dragon',0,'#7965d8'],['Kitten',0,'#ddd5c8'],
+ ['Puppy',0,'#b98250'],['Bunny',0,'#f1e8dc'],
+ ['Fox',0,'#dc7b32'],['Baby Dino',0,'#59a66a']
 ];
-let ownedPets=['None'];
-
 function buildPet(){
- pet.clear();
- if(petChoice==='None')return;
- const colors={
-  'Tiny Dragon':'#7965d8','Kitten':'#ddd5c8',
-  'Puppy':'#b98250','Bunny':'#f1e8dc',
-  'Fox':'#dc7b32','Baby Dino':'#59a66a'
- };
- const c=colors[petChoice]||'#7965d8';
- block(pet,new THREE.SphereGeometry(.34,14,12),c,0,.4,0);
- block(pet,new THREE.SphereGeometry(.22,12,10),c,0,.78,.03);
- block(pet,new THREE.SphereGeometry(.04,8,8),'#111',-.09,.82,.22);
- block(pet,new THREE.SphereGeometry(.04,8,8),'#111',.09,.82,.22);
+ pet.clear();if(petChoice==='None')return;
+ const c=petData.find(p=>p[0]===petChoice)?.[2]||'#7965d8';
+ part(pet,new THREE.SphereGeometry(.32,16,12),c,0,.4,0);
+ part(pet,new THREE.SphereGeometry(.22,16,12),c,0,.77,.02);
+ for(const side of [-1,1]){
+  part(pet,new THREE.SphereGeometry(.045,8,8),'#111111',side*.09,.82,.21);
+  const ear=part(pet,new THREE.ConeGeometry(.09,.28,8),c,side*.14,1.02,0);
+  ear.rotation.z=side*-.3;
+ }
  if(petChoice==='Tiny Dragon'){
-  const a=block(pet,new THREE.ConeGeometry(.17,.45,8),'#aa99ff',-.32,.7,0);
-  a.rotation.z=Math.PI/2;
-  const b=block(pet,new THREE.ConeGeometry(.17,.45,8),'#aa99ff',.32,.7,0);
-  b.rotation.z=-Math.PI/2;
+  for(const side of [-1,1]){
+   const wingPart=part(pet,new THREE.ConeGeometry(.18,.5,8),'#aa99ff',side*.32,.68,-.05);
+   wingPart.rotation.z=side*Math.PI/2;
+  }
  }
 }
-
-pets.forEach(([name,cost])=>{
- const row=document.createElement('div');
- row.className='item';
- row.textContent=name+' · '+cost+' CRYSTAL';
- const b=document.createElement('button');
- b.textContent='BUY / EQUIP';
- b.onclick=()=>{
-  if(!ownedPets.includes(name)){
-   if(crystal<cost){
-    alert('Not enough CRYSTAL COIN. Top-up is not connected yet.');
-    return;
-   }
-   crystal-=cost;
-   ownedPets.push(name);
-  }
-  petChoice=name;
-  buildPet();
-  wallet();
- };
- row.appendChild(b);
- $('petsList').appendChild(row);
+petData.forEach(([name])=>{
+ const row=document.createElement('div');row.className='item';row.textContent=name;
+ const btn=document.createElement('button');btn.textContent='EQUIP';
+ btn.onclick=()=>{petChoice=name;buildPet()};
+ row.appendChild(btn);$('petsList').appendChild(row);
 });
 
-/* WEAPONS */
+/* WEAPONS AND SKINS */
 const weapons=['Blaster','Pulse Rifle','Star Shot','Galaxy Beam'];
-let weaponIndex=0;
-
-function updateWeaponUI(){
+const skins=['Galaxy','Lava','Ice','Gold','Neon'];
+const skinColors=['#9b62ff','#f45b27','#65dfff','#e8c65b','#30f3d2'];
+function updateWeapons(){
  $('weaponsList').innerHTML='';
  weapons.forEach((name,i)=>{
-  const row=document.createElement('div');
-  row.className='item';
+  const row=document.createElement('div');row.className='item';
   row.textContent=name;
-  const b=document.createElement('button');
-  b.textContent=i===weaponIndex?'EQUIPPED':'EQUIP';
-  b.onclick=()=>{
-   weaponIndex=i;
-   updateWeaponUI();
-  };
-  row.appendChild(b);
-  $('weaponsList').appendChild(row);
+  const btn=document.createElement('button');
+  btn.textContent=i===weaponIndex?'EQUIPPED':'EQUIP';
+  btn.onclick=()=>{weaponIndex=i;updateWeapons()};
+  row.appendChild(btn);$('weaponsList').appendChild(row);
+ });
+ skins.forEach((name,i)=>{
+  const row=document.createElement('div');row.className='item';
+  row.textContent=name+' weapon skin';
+  const btn=document.createElement('button');btn.textContent=i===skinIndex?'SELECTED':'USE SKIN';
+  btn.onclick=()=>{skinIndex=i;updateWeapons()};
+  row.appendChild(btn);$('weaponsList').appendChild(row);
  });
 }
-updateWeaponUI();
+updateWeapons();
 
-/* MOBILE CONTROLS */
+/* LOCAL GAME MODES */
+const modes=[
+ ['🏦','Bank Heist'],['🔒','Prison Fight'],['🕶️','Mafia & Gang'],
+ ['🧟','Zombie Survival'],['💪','Fitness Game'],
+ ['⚔️','Deathmatch'],['🏟️','Battle Arena'],['🏎️','Racing']
+];
+let targets=[];
+modes.forEach(([icon,name])=>{
+ const row=document.createElement('div');row.className='modeCard';
+ row.innerHTML='<div style="font-size:24px">'+icon+'</div><div class="modeInfo"><b>'+name+'</b><br>Local practice challenge</div>';
+ const btn=document.createElement('button');btn.textContent='PLAY';
+ btn.onclick=()=>startMode(name);
+ row.appendChild(btn);$('modeList').appendChild(row);
+});
+window.startMode=name=>{
+ targets.forEach(t=>scene.remove(t));targets=[];
+ for(let i=0;i<5;i++){
+  const t=part(scene,new THREE.BoxGeometry(.8,1.5,.8),name==='Zombie Survival'?'#68b85a':'#e05b55',(Math.random()-.5)*14,.8,-(8+Math.random()*14));
+  targets.push(t);
+ }
+ $('modeStatus').innerHTML=name+' started!<br><button onclick="finishMode()">FINISH MODE +10 HYPE COINS</button>';
+};
+window.finishMode=()=>{
+ hype+=10;wallet();targets.forEach(t=>scene.remove(t));targets=[];
+ $('modeStatus').textContent='Practice complete! +10 HYPE COINS.';
+};
+
+/* JOYSTICK */
 let mx=0,mz=0,joyId=null;
 const joy=$('joy'),knob=$('knob');
-
 function joyMove(e){
  const r=joy.getBoundingClientRect();
- let dx=e.clientX-(r.left+r.width/2);
- let dy=e.clientY-(r.top+r.height/2);
- const max=42,len=Math.hypot(dx,dy);
- if(len>max){dx*=max/len;dy*=max/len}
+ let dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
+ const max=Math.max(24,(Math.min(r.width,r.height)-knob.offsetWidth)/2-7);
+ const len=Math.hypot(dx,dy);
+ if(len>max){dx=dx/len*max;dy=dy/len*max}
+ if(Math.hypot(dx,dy)<5)dx=dy=0;
  knob.style.transform=`translate(${dx}px,${dy}px)`;
- mx=dx/max;
- mz=dy/max;
+ mx=dx/max;mz=dy/max;
 }
-
+function joyEnd(e){
+ if(e&&joyId!==null&&e.pointerId!==joyId)return;
+ joyId=null;mx=0;mz=0;knob.style.transform='translate(0px,0px)';
+}
 joy.addEventListener('pointerdown',e=>{
- joyId=e.pointerId;
- joy.setPointerCapture(joyId);
- joyMove(e);
+ e.preventDefault();if(joyId!==null)return;
+ joyId=e.pointerId;joy.setPointerCapture(e.pointerId);joyMove(e);
 });
-joy.addEventListener('pointermove',e=>{
- if(e.pointerId===joyId)joyMove(e);
-});
-function joyEnd(){
- joyId=null;mx=mz=0;
- knob.style.transform='translate(0,0)';
-}
+joy.addEventListener('pointermove',e=>{if(e.pointerId===joyId){e.preventDefault();joyMove(e)}});
 joy.addEventListener('pointerup',joyEnd);
 joy.addEventListener('pointercancel',joyEnd);
+joy.addEventListener('lostpointercapture',joyEnd);
+window.addEventListener('blur',()=>joyEnd());
 
+/* JUMP, DUCK, SLIDE */
 let vy=0,jumping=false,crouched=false,sliding=false;
-$('jump').onpointerdown=()=>{
- if(!jumping){vy=7;jumping=true}
-};
-$('crouch').onpointerdown=()=>{
- crouched=!crouched;
- avatar.scale.y=crouched?height*.72:height;
-};
-$('slide').onpointerdown=()=>{
- sliding=true;
- setTimeout(()=>sliding=false,650);
-};
-$('swap').onpointerdown=()=>{
- weaponIndex=(weaponIndex+1)%weapons.length;
- updateWeaponUI();
-};
+$('jump').onpointerdown=()=>{if(!jumping){vy=7;jumping=true}};
+$('crouch').onpointerdown=()=>{crouched=!crouched;avatar.scale.y=crouched?height*.72:height};
+$('slide').onpointerdown=()=>{sliding=true;setTimeout(()=>sliding=false,650)};
+$('swap').onpointerdown=()=>{weaponIndex=(weaponIndex+1)%weapons.length;updateWeapons()};
 
-/* FIRE */
+/* FIRING */
 let bullets=[],firing=false,fireTimer;
-
 function shoot(){
  const dir=new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion);
- const ball=new THREE.Mesh(new THREE.SphereGeometry(.12,8,8),mat('#ffdf4d'));
- ball.position.copy(avatar.position).add(new THREE.Vector3(0,2,0));
- scene.add(ball);
- bullets.push({mesh:ball,dir,life:1.4});
+ const color=skinColors[skinIndex];
+ const ball=new THREE.Mesh(new THREE.SphereGeometry(.12,10,8),material(color,0x332211));
+ ball.position.copy(avatar.position).add(new THREE.Vector3(0,1.8,0));
+ scene.add(ball);bullets.push({mesh:ball,dir,life:1.5});
 }
-
 function startFire(e){
- e.preventDefault();
- if(firing)return;
- firing=true;
- shoot();
- fireTimer=setInterval(shoot,180);
+ e.preventDefault();if(firing)return;firing=true;shoot();fireTimer=setInterval(shoot,180);
 }
-function stopFire(){
- firing=false;
- clearInterval(fireTimer);
-}
+function stopFire(){firing=false;clearInterval(fireTimer)}
 $('fire').addEventListener('pointerdown',startFire);
 ['pointerup','pointercancel','lostpointercapture'].forEach(e=>$('fire').addEventListener(e,stopFire));
 window.addEventListener('pointerup',stopFire);
 
-/* GAME LOOP */
+/* ANIMATION */
 const clock=new THREE.Clock();
-
 function animate(){
  requestAnimationFrame(animate);
  const dt=Math.min(clock.getDelta(),.04);
  const speed=sliding?10:crouched?2.3:5.3;
-
- const forward=new THREE.Vector3(0,0,-1).applyAxisAngle(new THREE.Vector3(0,1,0),avatar.rotation.y);
- const right=new THREE.Vector3(1,0,0).applyAxisAngle(new THREE.Vector3(0,1,0),avatar.rotation.y);
- const v=forward.clone().multiplyScalar(-mz).add(right.multiplyScalar(mx));
-
- if(v.lengthSq()>.01){
-  v.normalize();
-  avatar.position.addScaledVector(v,speed*dt);
-  avatar.rotation.y=Math.atan2(-v.x,-v.z);
+ // world-space movement avoids joystick steering feedback
+ const v=new THREE.Vector3(mx,0,-mz);
+ const input=Math.min(1,v.length());
+ if(input>.08){
+  v.normalize();avatar.position.addScaledVector(v,speed*dt*input);
+  const yaw=Math.atan2(-v.x,-v.z);
+  let diff=((yaw-avatar.rotation.y+Math.PI*3)%(Math.PI*2))-Math.PI;
+  avatar.rotation.y+=diff*Math.min(1,12*dt);
  }
-
- vy-=18*dt;
- avatar.position.y+=vy*dt;
- if(avatar.position.y<=0){
-  avatar.position.y=0;
-  vy=0;
-  jumping=false;
- }
-
+ vy-=18*dt;avatar.position.y+=vy*dt;
+ if(avatar.position.y<=0){avatar.position.y=0;vy=0;jumping=false}
  portal.rotation.y+=dt*.35;
- const pd=avatar.position.distanceTo(new THREE.Vector3(0,0,-15));
- $('portalHint').style.display=pd<5&&$('modePanel').style.display!=='block'?'block':'none';
-
- const target=new THREE.Vector3(
-  avatar.position.x,
-  avatar.position.y+4.4,
-  avatar.position.z+8.5
- );
- camera.position.lerp(target,1-Math.pow(.001,dt));
+ const near=avatar.position.distanceTo(new THREE.Vector3(0,0,-15))<5;
+ $('portalHint').style.display=near&&$('modePanel').style.display!=='block'?'block':'none';
+ camera.position.lerp(new THREE.Vector3(avatar.position.x,avatar.position.y+4.4,avatar.position.z+8.5),1-Math.pow(.001,dt));
  camera.lookAt(avatar.position.x,avatar.position.y+1.6,avatar.position.z);
-
- pet.position.set(avatar.position.x+1.3,avatar.position.y,avatar.position.z+.3);
+ pet.position.set(avatar.position.x+1.3,avatar.position.y+.06+Math.sin(clock.elapsedTime*3)*.08,avatar.position.z+.3);
  pet.rotation.y=avatar.rotation.y;
-
  for(let i=bullets.length-1;i>=0;i--){
-  const b=bullets[i];
-  b.mesh.position.addScaledVector(b.dir,24*dt);
-  b.life-=dt;
-  if(b.life<=0){
-   scene.remove(b.mesh);
-   bullets.splice(i,1);
-  }
+  const b=bullets[i];b.mesh.position.addScaledVector(b.dir,24*dt);b.life-=dt;
+  if(b.life<=0){scene.remove(b.mesh);bullets.splice(i,1)}
  }
-
  renderer.render(scene,camera);
 }
-
 camera.position.set(0,5,9);
 animate();
-
 addEventListener('resize',()=>{
- camera.aspect=innerWidth/innerHeight;
- camera.updateProjectionMatrix();
+ camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+ renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
  renderer.setSize(innerWidth,innerHeight);
 });
 </script>
