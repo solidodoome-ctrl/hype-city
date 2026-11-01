@@ -45,4 +45,51 @@ if(active){let dx=(keys.d||keys.arrowright?1:0)-(keys.a||keys.arrowleft?1:0),dz=
 for(let i=coins.length-1;i>=0;i--)if(coins[i].position.distanceTo(new THREE.Vector3(avatar.position.x,avatar.position.y+1.4,avatar.position.z))<1.2){scene.remove(coins[i]);coins.splice(i,1);document.querySelector('#coins').textContent=++score}}
 camera.position.lerp(new THREE.Vector3(avatar.position.x,avatar.position.y+5.2,avatar.position.z+9.5),.09);camera.lookAt(avatar.position.x,avatar.position.y+2,avatar.position.z);renderer.render(scene,camera)}
 loop();addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
-</script></body></html>
+</script>
+<!-- HYPE CITY SHOP -->
+<button id="shopBtn" style="position:fixed;top:65px;right:14px;z-index:20;padding:13px 18px;background:linear-gradient(135deg,#9b5cff,#5c7cff);color:white;border:2px solid white;border-radius:15px;font-weight:bold">
+🛍️ SHOP
+</button>
+
+<div id="shopPanel" style="display:none;position:fixed;inset:10% 5%;z-index:30;background:#111a39;color:white;border:2px solid #5cf0ff;border-radius:22px;padding:20px;text-align:center;overflow-y:auto;font-family:system-ui">
+  <h1 style="color:#5cf0ff">HYPE CITY SHOP</h1>
+  <p>Make your character legendary!</p>
+
+  <h2>🔫 GUN SKINS</h2>
+  <div style="background:#26345c;padding:12px;border-radius:15px;margin:10px">
+    <h3>⭐ NORMAL SKINS</h3>
+    <p>Free basic blaster styles</p>
+    <button style="padding:10px">FREE</button>
+  </div>
+
+  <div style="background:#45316e;padding:12px;border-radius:15px;margin:10px">
+    <h3>💎 LEGENDARY SKINS</h3>
+    <p>Exclusive golden and neon designs</p>
+    <button style="padding:10px">PREMIUM TOP-UP</button>
+  </div>
+
+  <div style="background:#63345f;padding:12px;border-radius:15px;margin:10px">
+    <h3>🌟 SPECIAL SKINS</h3>
+    <p>Limited-edition special designs</p>
+    <button style="padding:10px">PREMIUM TOP-UP</button>
+  </div>
+
+  <h2>✨ AVATAR ITEMS</h2>
+  <p>👕 Clothes · 👖 Pants · 👟 Shoes</p>
+  <p>🪽 Wings · 🎩 Hats · 💇 Hairstyles</p>
+
+  <button id="closeShop" style="padding:14px 25px;background:#ff4f83;color:white;border:0;border-radius:15px;font-weight:bold">
+    CLOSE SHOP
+  </button>
+</div>
+
+<script>
+document.getElementById('shopBtn').onclick = function() {
+  document.getElementById('shopPanel').style.display = 'block';
+};
+
+document.getElementById('closeShop').onclick = function() {
+  document.getElementById('shopPanel').style.display = 'none';
+};
+</script>
+</body></html>
