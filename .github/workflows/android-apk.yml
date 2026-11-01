@@ -1,1 +1,48 @@
+name: Build HYPE CITY APK
 
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Build Android project
+        run: |
+          npm install
+          npm install @capacitor/android@^7.4.3
+          npx cap add android
+          npx cap sync android
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Find APK
+        run: |
+          APK=$(find android -type f -name "app-debug.apk" | head -n 1)
+          test -n "$APK"
+          cp "$APK" app-debug.apk
+
+      - name: Save APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: hype-city-debug-apk
+          path: app-debug.apk
