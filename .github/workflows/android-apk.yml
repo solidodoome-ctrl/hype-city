@@ -8,35 +8,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get project files
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Set up Java
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
 
-      - name: Install Android tools
+      - name: Build Android project
         run: |
           npm install
           npm install @capacitor/android@^7.4.3
           npx cap add android
           npx cap sync android
-
-      - name: Build APK
-        run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
+
+      - name: Find APK
+        run: |
+          find android -type f -name "*.apk" -print
+          APK=$(find android -type f -name "app-debug.apk" | head -n 1)
+          test -n "$APK"
+          cp "$APK" app-debug.apk
 
       - name: Save APK
         uses: actions/upload-artifact@v4
         with:
           name: hype-city-debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: app-debug.apk
+          if-no-files-found: error
