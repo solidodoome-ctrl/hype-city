@@ -46,50 +46,166 @@ for(let i=coins.length-1;i>=0;i--)if(coins[i].position.distanceTo(new THREE.Vect
 camera.position.lerp(new THREE.Vector3(avatar.position.x,avatar.position.y+5.2,avatar.position.z+9.5),.09);camera.lookAt(avatar.position.x,avatar.position.y+2,avatar.position.z);renderer.render(scene,camera)}
 loop();addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
 </script>
-<!-- HYPE CITY SHOP -->
-<button id="shopBtn" style="position:fixed;top:65px;right:14px;z-index:20;padding:13px 18px;background:linear-gradient(135deg,#9b5cff,#5c7cff);color:white;border:2px solid white;border-radius:15px;font-weight:bold">
-🛍️ SHOP
-</button>
 
-<div id="shopPanel" style="display:none;position:fixed;inset:10% 5%;z-index:30;background:#111a39;color:white;border:2px solid #5cf0ff;border-radius:22px;padding:20px;text-align:center;overflow-y:auto;font-family:system-ui">
-  <h1 style="color:#5cf0ff">HYPE CITY SHOP</h1>
-  <p>Make your character legendary!</p>
+<!-- HYPE CITY WEAPON SHOP -->
+<style>
+#shopBtn{position:fixed;top:65px;right:14px;z-index:20;padding:13px;background:#794cff;color:white;border:2px solid white;border-radius:15px;font-weight:bold}
+#shopPanel{display:none;position:fixed;inset:3%;z-index:30;background:#111a39;color:white;border:2px solid #5cf0ff;border-radius:20px;padding:14px;text-align:center;overflow-y:auto;font-family:system-ui}
+.shopTabs,.shopItems{display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
+.shopChoice{padding:10px;background:#29385f;color:white;border:1px solid #7188bd;border-radius:12px}
+.shopChoice.selected{background:#754cff;border:2px solid #5cf0ff}
+.shopCard{background:#25345c;border-radius:14px;padding:12px;margin:4px;min-width:115px;flex:1;max-width:170px;color:white;border:1px solid #6176a8}
+.shopCard.active{border:2px solid #5cf0ff}
+#weaponStage{height:110px;margin:10px;background:radial-gradient(circle,#354b83,#141b39);border-radius:18px;display:grid;place-items:center}
+#weaponModel{font-size:68px;animation:spinWeapon 5s linear infinite;display:inline-block}
+@keyframes spinWeapon{to{transform:rotateY(360deg)}}
+</style>
 
-  <h2>🔫 GUN SKINS</h2>
-  <div style="background:#26345c;padding:12px;border-radius:15px;margin:10px">
-    <h3>⭐ NORMAL SKINS</h3>
-    <p>Free basic blaster styles</p>
-    <button style="padding:10px">FREE</button>
-  </div>
+<button id="shopBtn">🛍️ SHOP</button>
+<div id="shopPanel">
+<h1 style="color:#5cf0ff">HYPE CITY SHOP</h1>
 
-  <div style="background:#45316e;padding:12px;border-radius:15px;margin:10px">
-    <h3>💎 LEGENDARY SKINS</h3>
-    <p>Exclusive golden and neon designs</p>
-    <button style="padding:10px">PREMIUM TOP-UP</button>
-  </div>
+<div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+ <b>🪙 HYPE COIN: <span id="hypeBalance">100</span></b>
+ <b>💎 CRYSTAL COIN: <span id="crystalBalance">0</span></b>
+</div>
+<p style="font-size:11px;color:#aab9dc">Demo balances for testing. Real top-ups are not connected.</p>
 
-  <div style="background:#63345f;padding:12px;border-radius:15px;margin:10px">
-    <h3>🌟 SPECIAL SKINS</h3>
-    <p>Limited-edition special designs</p>
-    <button style="padding:10px">PREMIUM TOP-UP</button>
-  </div>
+<h3>CHOOSE CATEGORY</h3>
+<div class="shopTabs">
+ <button class="shopChoice selected" data-category="primary">🔫 Primary</button>
+ <button class="shopChoice" data-category="secondary">🔹 Secondary</button>
+ <button class="shopChoice" data-category="melee">⚔️ Melee</button>
+ <button class="shopChoice" data-category="special">✨ Special</button>
+ <button class="shopChoice" data-category="explosive">💣 Explosives</button>
+</div>
 
-  <h2>✨ AVATAR ITEMS</h2>
-  <p>👕 Clothes · 👖 Pants · 👟 Shoes</p>
-  <p>🪽 Wings · 🎩 Hats · 💇 Hairstyles</p>
+<h3>CHOOSE YOUR ITEM</h3>
+<div class="shopItems" id="weaponItems"></div>
 
-  <button id="closeShop" style="padding:14px 25px;background:#ff4f83;color:white;border:0;border-radius:15px;font-weight:bold">
-    CLOSE SHOP
-  </button>
+<h3>ITEM PREVIEW</h3>
+<div id="weaponStage"><div id="weaponModel">🔫</div></div>
+<h2 id="weaponName">Blaster</h2>
+<p id="weaponInfo">Starter energy blaster</p>
+
+<h3>🎨 SKINS FOR THIS ITEM</h3>
+<div class="shopTabs">
+ <button class="shopChoice selected" data-skin="normal">⭐ Normal</button>
+ <button class="shopChoice" data-skin="gold">💎 Golden</button>
+ <button class="shopChoice" data-skin="neon">🌈 Neon</button>
+ <button class="shopChoice" data-skin="galaxy">🌌 Galaxy</button>
+</div>
+<p id="skinInfo">Normal — FREE</p>
+<button id="buyButton" style="padding:12px 20px;background:#32c995;color:#10233b;border:0;border-radius:12px;font-weight:bold">EQUIP NORMAL</button>
+
+<hr style="border-color:#53658c;margin:18px 0">
+<h2>💣 GRENADE SHOP</h2>
+<p>Cartoon event grenades for your game inventory.</p>
+<div class="shopCard" style="margin:auto">
+ <div style="font-size:45px">💣</div>
+ <b>Party Pop Grenade</b>
+ <p>Cost: 25 HYPE COINS</p>
+ <button id="buyGrenade" class="shopChoice">BUY GRENADE</button>
+ <p>Owned: <span id="grenadeCount">0</span></p>
+</div>
+
+<hr style="border-color:#53658c;margin:18px 0">
+<h3>💎 CRYSTAL COIN TOP-UP</h3>
+<p>Premium currency for Legendary and Special skins.</p>
+<button class="shopChoice" id="topupButton">CRYSTAL COIN TOP-UP — COMING SOON</button>
+<p id="shopMessage" style="color:#5cf0ff">Welcome to HYPE CITY!</p>
+
+<button id="closeShop" style="padding:13px 25px;background:#ff4f83;color:white;border:0;border-radius:12px;font-weight:bold">CLOSE SHOP</button>
 </div>
 
 <script>
-document.getElementById('shopBtn').onclick = function() {
-  document.getElementById('shopPanel').style.display = 'block';
+(()=>{
+const $=id=>document.getElementById(id);
+const items={
+primary:[
+['Blaster','🔫','Starter energy blaster'],
+['Pulse Rifle','🔫','Futuristic energy rifle'],
+['Star Shot','💥','Star-powered toy blaster'],
+['Galaxy Beam','🔭','Cosmic beam launcher']],
+secondary:[
+['Pistol','🔫','Compact energy sidearm'],
+['Double Barrel','💥','Double-barrel fantasy blaster'],
+['Dual Pistols','🔫','Twin energy sidearms']],
+melee:[
+['Toy Knife','🔪','Colorful fantasy toy knife'],
+['Katana','⚔️','Decorative fantasy katana'],
+['Dual Blades','⚔️','Twin fantasy blades']],
+special:[
+['Magic Bow','🏹','Fantasy energy bow'],
+['Shuriken','✴️','Spinning fantasy star'],
+['Crystal Wand','🪄','Magical crystal wand']],
+explosive:[
+['Party Pop Grenade','💣','Colorful cartoon event grenade']]
 };
-
-document.getElementById('closeShop').onclick = function() {
-  document.getElementById('shopPanel').style.display = 'none';
+const skins={
+normal:{label:'Normal',cost:0,currency:'HYPE COIN',color:'#dce8ff'},
+gold:{label:'Golden',cost:100,currency:'CRYSTAL COIN',color:'#ffd447'},
+neon:{label:'Neon',cost:150,currency:'CRYSTAL COIN',color:'#ff55e8'},
+galaxy:{label:'Galaxy',cost:200,currency:'CRYSTAL COIN',color:'#9b79ff'}
 };
+let category='primary',index=0,skin='normal';
+let hype=100,crystal=0,grenades=0;
+let owned={};
+function key(){return category+'-'+index+'-'+skin}
+function render(){
+const item=items[category][index];
+$('weaponItems').innerHTML='';
+items[category].forEach((it,i)=>{
+const b=document.createElement('button');
+b.className='shopCard'+(i===index?' active':'');
+b.innerHTML='<div style="font-size:30px">'+it[1]+'</div><b>'+it[0]+'</b>';
+b.onclick=()=>{index=i;render()};
+$('weaponItems').appendChild(b);
+});
+$('weaponName').textContent=item[0];
+$('weaponModel').textContent=item[1];
+$('weaponInfo').textContent=item[2];
+$('weaponModel').style.filter='drop-shadow(0 5px 12px '+skins[skin].color+')';
+$('skinInfo').textContent=skins[skin].label+' skin — '+(skin==='normal'?'FREE':skins[skin].cost+' CRYSTAL COINS');
+document.querySelectorAll('[data-category]').forEach(b=>b.classList.toggle('selected',b.dataset.category===category));
+document.querySelectorAll('[data-skin]').forEach(b=>b.classList.toggle('selected',b.dataset.skin===skin));
+$('hypeBalance').textContent=hype;
+$('crystalBalance').textContent=crystal;
+$('grenadeCount').textContent=grenades;
+const isOwned=owned[key()]||skin==='normal';
+$('buyButton').textContent=isOwned?'EQUIP '+skins[skin].label.toUpperCase()+' SKIN':'BUY FOR '+skins[skin].cost+' CRYSTAL COINS';
+}
+document.querySelectorAll('[data-category]').forEach(b=>b.onclick=()=>{
+category=b.dataset.category;index=0;skin='normal';render();
+});
+document.querySelectorAll('[data-skin]').forEach(b=>b.onclick=()=>{
+skin=b.dataset.skin;render();
+});
+$('buyButton').onclick=()=>{
+if(skin==='normal'||owned[key()]){
+$('shopMessage').textContent='Selected '+items[category][index][0]+' with '+skins[skin].label+' skin!';
+}else if(crystal>=skins[skin].cost){
+crystal-=skins[skin].cost;owned[key()]=true;
+$('shopMessage').textContent='Skin purchased! You can now equip it.';
+}else{
+$('shopMessage').textContent='Not enough Crystal Coins. Top-up is coming soon!';
+}
+render();
+};
+$('buyGrenade').onclick=()=>{
+if(hype>=25){
+hype-=25;grenades++;
+$('shopMessage').textContent='Party Pop Grenade purchased!';
+}else{
+$('shopMessage').textContent='Not enough Hype Coins!';
+}
+render();
+};
+$('topupButton').onclick=()=>{$('shopMessage').textContent='Crystal Coin top-ups are not connected yet.'};
+$('shopBtn').onclick=()=>$('shopPanel').style.display='block';
+$('closeShop').onclick=()=>$('shopPanel').style.display='none';
+render();
+})();
 </script>
+
 </body></html>
