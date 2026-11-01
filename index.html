@@ -1,48 +1,84 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Hype City</title>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>HYPE CITY</title>
 <style>
-*{box-sizing:border-box}html,body,#game{margin:0;width:100%;height:100%;overflow:hidden;font-family:system-ui;background:#91d9ff;touch-action:none}canvas{display:block}
-#brand{position:fixed;top:14px;left:15px;color:white;font-weight:1000;font-size:25px;letter-spacing:2px;text-shadow:0 2px 8px #234}#brand b{color:#5cf0ff}
-#score{position:fixed;right:14px;top:14px;background:#121b3ddd;color:white;padding:10px 15px;border-radius:20px;font-weight:900}
-#tip{position:fixed;top:65px;left:50%;transform:translateX(-50%);background:#121b3dbb;color:white;padding:8px 12px;border-radius:20px;font-size:12px;white-space:nowrap}
-#pad{position:fixed;bottom:18px;left:18px;display:grid;grid-template-columns:52px 52px 52px;grid-template-rows:52px 52px;gap:5px}
-button{border:1px solid #ffffff80;background:#121b3dcc;color:white;border-radius:15px;font-weight:900;font-size:20px;touch-action:none}#up{grid-column:2}#left{grid-column:1;grid-row:2}#down{grid-column:2;grid-row:2}#right{grid-column:3;grid-row:2}
-#jump{position:fixed;right:22px;bottom:24px;width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,#ff55c8,#875aff);font-size:13px}
-#cover{position:fixed;inset:0;display:grid;place-items:center;background:#101735bb;color:white;text-align:center;padding:20px}
-.card{background:#111a39ee;border:1px solid #ffffff55;border-radius:25px;padding:28px;max-width:420px}.card h1{font-size:60px;line-height:.9;margin:0}.card h1 span{color:#5cf0ff}.card p{line-height:1.5;color:#dce7ff}.card button{padding:14px 25px;border-radius:30px;background:linear-gradient(90deg,#5cf0ff,#baffdf);color:#111a39;font-size:16px}
-</style></head><body><div id="game"></div><div id="brand">HYPE<b>CITY</b></div><div id="score">🪙 <span id="coins">0</span></div><div id="tip">Explore the city and collect glowing coins</div>
-<div id="pad"><button id="up">▲</button><button id="left">◀</button><button id="down">▼</button><button id="right">▶</button></div><button id="jump">JUMP</button>
-<div id="cover"><div class="card"><h1>HYPE<br><span>CITY</span></h1><p>A colorful 3D city prototype. Explore, jump, and collect coins. Your adventure starts here.</p><button id="play">ENTER THE CITY →</button><p style="font-size:11px;opacity:.7">Prototype 01 · Single-player demo</p></div></div>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#081126;color:white;font-family:Arial,sans-serif;touch-action:none}canvas{display:block}
+#hud{position:fixed;inset:0;pointer-events:none}#brand{position:absolute;top:10px;left:12px;color:#45eaff;font-size:22px;font-weight:1000;letter-spacing:2px;text-shadow:0 0 12px #00cfff}
+#money{position:absolute;right:10px;top:10px;text-align:right;font-size:13px;font-weight:bold;line-height:1.7;text-shadow:0 2px 5px #000}
+#menus{position:absolute;top:54px;left:10px;display:flex;gap:6px;pointer-events:auto}
+button{background:linear-gradient(135deg,#102b50,#251448);border:1px solid #45eaff;color:white;border-radius:11px;padding:10px;font-weight:bold;box-shadow:0 0 9px #00cfff55;touch-action:none}
+#pad{position:absolute;left:12px;bottom:12px;width:142px;height:142px;pointer-events:auto}
+.move{position:absolute;width:46px;height:46px;padding:0;font-size:20px}.up{left:48px;top:0}.down{left:48px;bottom:0}.left{left:0;top:48px}.right{right:0;top:48px}
+#joy{position:absolute;left:165px;bottom:20px;width:118px;height:118px;border:2px solid #45eaff99;border-radius:50%;background:#09254c88;pointer-events:auto}
+#knob{position:absolute;left:34px;top:34px;width:46px;height:46px;border-radius:50%;background:radial-gradient(circle,#c8ffff,#1688c8);box-shadow:0 0 15px #45eaff}
+#actions{position:absolute;right:10px;bottom:12px;display:grid;grid-template-columns:repeat(2,76px);gap:7px;pointer-events:auto}
+#actions button{min-height:44px;padding:6px 3px;font-size:10px}#fire{grid-column:span 2;background:linear-gradient(135deg,#8d225e,#32134e);border-color:#ff61d1;min-height:54px;font-size:14px}
+#aim{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#fff;font-size:25px;text-shadow:0 0 8px #45eaff}
+#toast{position:absolute;top:43%;left:50%;transform:translate(-50%,-50%);background:#08152bee;border:1px solid #45eaff;border-radius:10px;padding:10px 15px;display:none}
+#panel{display:none;position:fixed;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92vw,460px);max-height:80vh;overflow:auto;background:#08152bf2;border:1px solid #45eaff;border-radius:16px;padding:15px;box-shadow:0 0 25px #00cfff66}
+#panel h2{color:#45eaff;margin:0 0 12px}.close{float:right;border-color:#ff61d1}.cards{display:grid;grid-template-columns:1fr 1fr;gap:8px}.card{background:#142348;border:1px solid #365b85;border-radius:10px;padding:9px;font-size:12px}.card button{width:100%;margin-top:7px}.tabs{display:flex;gap:6px;margin:10px 0}.note{font-size:11px;color:#c3d5ef;line-height:1.5}select{display:block;width:100%;padding:10px;margin:8px 0;background:#142348;color:white;border:1px solid #45eaff;border-radius:8px}
+@media(max-width:390px){#joy{left:145px;width:105px;height:105px}#knob{left:28px;top:28px}#actions{grid-template-columns:repeat(2,66px)}#pad{transform:scale(.9);transform-origin:bottom left}}
+</style>
+</head>
+<body>
+<div id="hud">
+ <div id="brand">HYPE CITY</div><div id="money">HYPE COIN: <span id="hype">100</span><br>CRYSTAL COIN: <span id="crystal">0</span></div>
+ <div id="menus"><button id="shopBtn">SHOP</button><button id="styleBtn">STYLE</button></div><div id="aim">+</div><div id="toast"></div>
+ <div id="pad"><button class="move up" id="up">▲</button><button class="move left" id="left">◀</button><button class="move down" id="down">▼</button><button class="move right" id="right">▶</button></div>
+ <div id="joy"><div id="knob"></div></div>
+ <div id="actions">
+  <button id="fire">HOLD TO FIRE</button><button id="jump">JUMP</button><button id="crouch">CROUCH</button>
+  <button id="slide">SLIDE</button><button id="switch">SWITCH</button>
+ </div>
+</div>
+<div id="panel"><button class="close" id="close">CLOSE</button><h2 id="panelTitle">HYPE CITY</h2><div id="panelBody"></div></div>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-const scene=new THREE.Scene();scene.background=new THREE.Color(0x91d9ff);scene.fog=new THREE.Fog(0x91d9ff,40,105);
-const camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,180);
-const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;document.querySelector('#game').appendChild(renderer.domElement);
-scene.add(new THREE.HemisphereLight(0xe5faff,0x62708b,2));let sun=new THREE.DirectionalLight(0xffffff,2.2);sun.position.set(-15,28,15);sun.castShadow=true;scene.add(sun);
-const material=c=>new THREE.MeshStandardMaterial({color:c,roughness:.8});
-function block(x,y,z,w,h,d,c){let m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material(c));m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;scene.add(m);return m}
-let floor=new THREE.Mesh(new THREE.PlaneGeometry(180,180),material(0x65bd79));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
-block(0,.03,0,13,.06,150,0x343b55);block(0,.03,0,150,.06,13,0x343b55);
-for(let i=-68;i<70;i+=8){block(0,.08,i,.2,.03,3,0xffe8a0);block(i,.08,0,3,.03,.2,0xffe8a0)}
-block(7.5,.1,0,2,.2,150,0xc7d6df);block(-7.5,.1,0,2,.2,150,0xc7d6df);
-const colors=[0xff8b70,0x8c78ed,0x45b9c8,0xf4c65e,0xec78b5,0x7a9be8,0x9bcf91];
-for(let x=-34;x<=34;x+=17)for(let z=-34;z<=34;z+=17){if(Math.abs(x)<9||Math.abs(z)<9)continue;let w=8+Math.random()*3,d=8+Math.random()*3,h=8+Math.random()*18;block(x,h/2,z,w,h,d,colors[Math.floor(Math.random()*colors.length)]);block(x,h+.12,z,w+.2,.25,d+.2,0x263452);for(let yy=2;yy<h-1;yy+=3)for(let xx=-w/2+1;xx<w/2-1;xx+=2){let win=new THREE.Mesh(new THREE.BoxGeometry(.9,1,.08),material(0xb9f4ff));win.position.set(x+xx,yy,z-d/2-.06);scene.add(win)}}
-let park=new THREE.Mesh(new THREE.CircleGeometry(8,32),material(0x45a86a));park.rotation.x=-Math.PI/2;park.position.set(25,.12,25);scene.add(park);
-for(let i=0;i<9;i++){let a=i*Math.PI*2/9,x=25+Math.cos(a)*5,z=25+Math.sin(a)*5;let tr=new THREE.Mesh(new THREE.CylinderGeometry(.22,.3,2,7),material(0x805b3c));tr.position.set(x,1,z);scene.add(tr);let crown=new THREE.Mesh(new THREE.IcosahedronGeometry(1.3,1),material(0x278d65));crown.position.set(x,2.6,z);scene.add(crown)}
-const avatar=new THREE.Group();scene.add(avatar);
-function part(w,h,d,c,x,y,z){let m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material(c));m.position.set(x,y,z);m.castShadow=true;avatar.add(m)}
-part(.85,1.05,.48,0x5d75ff,0,1.25,0);part(.78,.78,.72,0xffcf9f,0,2.18,0);part(.82,.22,.76,0x382b48,0,2.58,0);part(.28,.72,.32,0x26365c,-.28,.38,0);part(.28,.72,.32,0x26365c,.28,.38,0);
-for(let x of [-.18,.18])part(.07,.09,.035,0x20243c,x,2.22,.37);
-avatar.position.set(0,0,2);
-let coins=[];const gold=new THREE.MeshStandardMaterial({color:0xffdc4a,metalness:.6,roughness:.25,emissive:0x8a5100});
-for(let i=0;i<24;i++){let a=i*2.4,r=12+(i%4)*5,c=new THREE.Mesh(new THREE.TorusGeometry(.42,.14,8,18),gold);c.position.set(Math.cos(a)*r,1.6+(i%3)*.3,Math.sin(a)*r);scene.add(c);coins.push(c)}
-let keys={},active=false,vy=0,grounded=true,score=0;const set=(k,v)=>keys[k]=v;
-[['up','w'],['down','s'],['left','a'],['right','d']].forEach(([id,k])=>{let b=document.getElementById(id);b.onpointerdown=e=>{e.preventDefault();set(k,true)};['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,()=>set(k,false)))});
-addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;if(e.code==='Space')jump()});addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
-function jump(){if(active&&grounded){vy=8;grounded=false}}document.querySelector('#jump').onpointerdown=e=>{e.preventDefault();jump()};
-document.querySelector('#play').onclick=()=>{active=true;document.querySelector('#cover').style.display='none'};
-let clock=new THREE.Clock();function loop(){requestAnimationFrame(loop);let dt=Math.min(clock.getDelta(),.035),t=clock.elapsedTime;coins.forEach(c=>{c.rotation.y+=dt*2;c.position.y=1.6+Math.sin(t*2+c.position.x)*.2});
-if(active){let dx=(keys.d||keys.arrowright?1:0)-(keys.a||keys.arrowleft?1:0),dz=(keys.s||keys.arrowdown?1:0)-(keys.w||keys.arrowup?1:0),l=Math.hypot(dx,dz);if(l){dx/=l;dz/=l;avatar.position.x+=dx*dt*8;avatar.position.z+=dz*dt*8;avatar.rotation.y=Math.atan2(dx,dz)}vy-=20*dt;avatar.position.y+=vy*dt;if(avatar.position.y<=0){avatar.position.y=0;vy=0;grounded=true}avatar.position.x=THREE.MathUtils.clamp(avatar.position.x,-68,68);avatar.position.z=THREE.MathUtils.clamp(avatar.position.z,-68,68);
-for(let i=coins.length-1;i>=0;i--)if(coins[i].position.distanceTo(new THREE.Vector3(avatar.position.x,avatar.position.y+1.4,avatar.position.z))<1.2){scene.remove(coins[i]);coins.splice(i,1);document.querySelector('#coins').textContent=++score}}
-camera.position.lerp(new THREE.Vector3(avatar.position.x,avatar.position.y+5.2,avatar.position.z+9.5),.09);camera.lookAt(avatar.position.x,avatar.position.y+2,avatar.position.z);renderer.render(scene,camera)}
-loop();addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
-</script></body></html>
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x09132b);scene.fog=new THREE.Fog(0x09132b,35,120);
+const camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,250);
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);document.body.appendChild(renderer.domElement);
+scene.add(new THREE.HemisphereLight(0xaadfff,0x202040,2));const sun=new THREE.DirectionalLight(0xffffff,2);sun.position.set(-15,30,20);scene.add(sun);
+const material=(c,e=0)=>new THREE.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:e});
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(220,220),material(0x17213c));floor.rotation.x=-Math.PI/2;scene.add(floor);const grid=new THREE.GridHelper(220,55,0x1d6b91,0x263451);grid.position.y=.02;scene.add(grid);
+for(let i=-4;i<=4;i++){let r=new THREE.Mesh(new THREE.BoxGeometry(220,.04,5),material(0x080d19));r.position.set(0,.04,i*22);scene.add(r);r=new THREE.Mesh(new THREE.BoxGeometry(5,.04,220),material(0x080d19));r.position.set(i*22,.04,0);scene.add(r);}
+for(let x=-4;x<=4;x++)for(let z=-4;z<=4;z++){if((x+z)%3===0)continue;let h=6+Math.random()*15,w=7+Math.random()*4,d=7+Math.random()*4;let b=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material([0x253c68,0x29305c,0x1c4561][Math.floor(Math.random()*3)]));b.position.set(x*22,h/2,z*22);scene.add(b);for(let y=2;y<h-1;y+=3){let win=new THREE.Mesh(new THREE.BoxGeometry(w,.12,.12),material(0x35dfff,.8));win.position.set(b.position.x,y,b.position.z+d/2+.07);scene.add(win);}}
+const avatar=new THREE.Group();scene.add(avatar);avatar.position.set(0,0,5);
+const bodyMat=material(0x36cde8,.15),hairMat=material(0x17162d);
+function part(g,m,x,y,z){let o=new THREE.Mesh(g,m);o.position.set(x,y,z);avatar.add(o);return o;}
+part(new THREE.BoxGeometry(.9,1,.48),bodyMat,0,1.35,0);part(new THREE.BoxGeometry(.62,.62,.62),material(0xffc99d),0,2.18,0);const hair=part(new THREE.BoxGeometry(.66,.22,.67),hairMat,0,2.52,0);
+const legs=[];for(let x of [-.24,.24])legs.push(part(new THREE.BoxGeometry(.32,.8,.36),material(0x263b7b),x,.45,0));
+part(new THREE.BoxGeometry(.25,.8,.3),material(0xffc99d),-.62,1.38,0);part(new THREE.BoxGeometry(.25,.8,.3),material(0xffc99d),.62,1.38,0);
+const gun=new THREE.Group();avatar.add(gun);const gunMesh=new THREE.Mesh(new THREE.BoxGeometry(.18,.18,.85),material(0x45eaff,.8));gunMesh.position.set(.5,1.3,.45);gun.add(gunMesh);const muzzle=new THREE.Mesh(new THREE.SphereGeometry(.13,12,12),material(0xff4bd2,1));muzzle.position.set(.5,1.3,.9);gun.add(muzzle);
+const coinList=[];for(let i=0;i<24;i++){let c=new THREE.Mesh(new THREE.TorusGeometry(.35,.11,8,18),material(0xffd65a,1));let a=Math.random()*Math.PI*2,r=8+Math.random()*65;c.position.set(Math.cos(a)*r,.9,Math.sin(a)*r);scene.add(c);coinList.push(c);}
+let hype=100,crystal=0,owned=new Set(['Blaster']),weapon='Blaster',skin='Normal',ownedSkins=new Set(['Normal']);const weaponNames=['Blaster','Pulse Rifle','Star Shot','Galaxy Beam','Pistol','Double Barrel','Dual Pistols','Toy Knife','Katana','Dual Blades','Magic Bow','Shuriken','Crystal Wand','Party Pop Grenade'];const costs=[0,35,55,80,0,35,45,0,40,60,55,25,90,25];const skinNames=['Normal','Golden','Neon','Galaxy'],skinCosts=[0,100,150,200],skinColors=[0x45eaff,0xffd447,0xff45c8,0x805bff];
+function hud(){document.querySelector('#hype').textContent=hype;document.querySelector('#crystal').textContent=crystal;}function say(s){let t=document.querySelector('#toast');t.textContent=s;t.style.display='block';clearTimeout(say.t);say.t=setTimeout(()=>t.style.display='none',1600);}
+function equip(w){weapon=w;gunMesh.scale.z=w==='Toy Knife'?.4:w.includes('Rifle')?1.3:1;muzzle.visible=w!=='Toy Knife';}
+function show(title,html){document.querySelector('#panelTitle').textContent=title;document.querySelector('#panelBody').innerHTML=html;document.querySelector('#panel').style.display='block';}
+document.querySelector('#close').onclick=()=>document.querySelector('#panel').style.display='none';
+function shop(){show('HYPE CITY SHOP','<p class="note">Collect glowing coins to earn HYPE COIN. CRYSTAL COIN top-ups are not enabled in this prototype.</p><div class="tabs"><button id="weaponsTab">WEAPONS</button><button id="skinsTab">SKINS</button><button id="topTab">TOP UP</button></div><div id="shopList"></div>');const list=document.querySelector('#shopList');function tab(which){if(which==='weapons'){list.innerHTML='<div class="cards">'+weaponNames.map((w,i)=>`<div class="card"><b>${w}</b><br>${owned.has(w)?'Owned':'Cost: '+costs[i]+' HYPE'}<button data-w="${w}">${owned.has(w)?'EQUIP':'BUY'}</button></div>`).join('')+'</div>';list.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{let w=b.dataset.w,i=weaponNames.indexOf(w);if(owned.has(w)){equip(w);say(w+' equipped');}else if(hype>=costs[i]){hype-=costs[i];owned.add(w);equip(w);hud();shop();say('Purchased '+w);}else say('Not enough HYPE COIN');});}else if(which==='skins'){list.innerHTML='<div class="cards">'+skinNames.map((s,i)=>`<div class="card"><b>${s} skin</b><br>${ownedSkins.has(s)?'Owned':skinCosts[i]+' CRYSTAL'}<button data-s="${s}">${ownedSkins.has(s)?'EQUIP':'BUY'}</button></div>`).join('')+'</div>';list.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{let s=b.dataset.s,i=skinNames.indexOf(s);if(ownedSkins.has(s)){skin=s;}else if(crystal>=skinCosts[i]){crystal-=skinCosts[i];ownedSkins.add(s);skin=s;hud();}else{say('Need CRYSTAL COIN');return;}let c=skinColors[skinNames.indexOf(skin)];gunMesh.material.color.setHex(c);gunMesh.material.emissive.setHex(c);});}else list.innerHTML='<p class="note">CRYSTAL COIN top-ups are coming later. No real-money payments are connected.</p>';}
+ document.querySelector('#weaponsTab').onclick=()=>tab('weapons');document.querySelector('#skinsTab').onclick=()=>tab('skins');document.querySelector('#topTab').onclick=()=>tab('top');tab('weapons');}
+document.querySelector('#shopBtn').onclick=shop;
+document.querySelector('#styleBtn').onclick=()=>{show('CHARACTER STYLE','<label>Hair colour</label><select id="hairColor"><option value="dark">Midnight</option><option value="pink">Neon Pink</option><option value="blue">Electric Blue</option><option value="gold">Gold</option></select><label>Outfit</label><select id="outfit"><option value="cyan">Hype Cyan</option><option value="pink">Neon Pop</option><option value="purple">Galaxy</option><option value="gold">Gold Rush</option></select><label>Wings</label><select id="wings"><option value="none">No wings</option><option value="neon">Neon wings</option><option value="shadow">Shadow wings</option></select><button id="apply">APPLY</button><p class="note">This prototype has basic colour and wing styling. Detailed clothing, shoes, pants and accessories can be expanded later.</p>');document.querySelector('#apply').onclick=()=>{let c={dark:0x17162d,pink:0xff45c8,blue:0x258bff,gold:0xffd447,cyan:0x36cde8,purple:0x805bff};hair.material.color.setHex(c[document.querySelector('#hairColor').value]);bodyMat.color.setHex(c[document.querySelector('#outfit').value]);avatar.children.filter(o=>o.userData.wing).forEach(o=>avatar.remove(o));let wing=document.querySelector('#wings').value;if(wing!=='none')for(let s of [-1,1]){let o=part(new THREE.BoxGeometry(.12,1,.65),material(wing==='neon'?0x35eaff:0x7136bb,1),s*.62,1.65,-.25);o.userData.wing=true;}say('Style updated');document.querySelector('#panel').style.display='none';};};
+let joyX=0,joyZ=0,pressed={};function bindMove(id){let el=document.getElementById(id);el.addEventListener('pointerdown',e=>{e.preventDefault();pressed[id]=true;el.setPointerCapture(e.pointerId);});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>el.addEventListener(ev,()=>pressed[id]=false));}['up','down','left','right'].forEach(bindMove);
+const joy=document.querySelector('#joy'),knob=document.querySelector('#knob');let joyId=null;joy.addEventListener('pointerdown',e=>{joyId=e.pointerId;joy.setPointerCapture(joyId);moveJoy(e);});joy.addEventListener('pointermove',e=>{if(e.pointerId===joyId)moveJoy(e);});function moveJoy(e){let r=joy.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),l=Math.hypot(dx,dy),m=39;if(l>m){dx=dx/l*m;dy=dy/l*m;}joyX=dx/m;joyZ=dy/m;knob.style.transform=`translate(${dx}px,${dy}px)`;}function joyReset(){joyId=null;joyX=joyZ=0;knob.style.transform='translate(0,0)';}joy.addEventListener('pointerup',joyReset);joy.addEventListener('pointercancel',joyReset);
+let crouch=false,slide=false,vy=0,grounded=true;document.querySelector('#jump').onclick=()=>{if(grounded){vy=8;grounded=false;}};document.querySelector('#crouch').onclick=()=>{crouch=!crouch;avatar.scale.y=crouch?.68:1;say(crouch?'Crouch':'Stand');};document.querySelector('#slide').onclick=()=>{if(!slide){slide=true;avatar.scale.y=.48;setTimeout(()=>{slide=false;avatar.scale.y=crouch?.68:1;},650);}};
+document.querySelector('#switch').onclick=()=>{let a=weaponNames.filter(w=>owned.has(w)),i=a.indexOf(weapon);equip(a[(i+1)%a.length]);say(weapon);};
+// HOLD-TO-FIRE: repeats while the finger remains pressed; the screen point controls the firing direction.
+let firing=false,fireTimer=null;const projectiles=[];function shootAt(clientX,clientY){if(weapon==='Party Pop Grenade'){if(hype<25){say('Need 25 HYPE COIN');return;}hype-=25;hud();}
+ const rect=renderer.domElement.getBoundingClientRect(),nx=(clientX-rect.left)/rect.width*2-1,ny=-(clientY-rect.top)/rect.height*2+1;const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2(nx,ny),camera);const origin=avatar.position.clone().add(new THREE.Vector3(0,1.45,0));let target=ray.ray.direction.clone();let p=new THREE.Mesh(new THREE.SphereGeometry(.14,10,10),material(0xff4bd2,1));p.position.copy(origin);p.userData.velocity=target.multiplyScalar(30);scene.add(p);projectiles.push(p);muzzle.visible=true;setTimeout(()=>muzzle.visible=weapon!=='Toy Knife',90);}
+const fire=document.querySelector('#fire');function beginFire(e){e.preventDefault();if(firing)return;firing=true;const x=e.clientX,y=e.clientY;shootAt(x,y);fireTimer=setInterval(()=>{if(firing)shootAt(x,y);},180);}function endFire(){firing=false;clearInterval(fireTimer);}fire.addEventListener('pointerdown',beginFire);['pointerup','pointercancel','lostpointercapture','pointerleave'].forEach(ev=>fire.addEventListener(ev,endFire));
+// Also allow holding anywhere on the game view to fire toward that exact screen point.
+renderer.domElement.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'||e.pointerType==='mouse'){firing=true;let x=e.clientX,y=e.clientY;shootAt(x,y);fireTimer=setInterval(()=>{if(firing)shootAt(x,y);},180);}});['pointerup','pointercancel','pointerleave'].forEach(ev=>renderer.domElement.addEventListener(ev,endFire));
+let collected=0;const clock=new THREE.Clock();function animate(){requestAnimationFrame(animate);let dt=Math.min(clock.getDelta(),.04);let x=joyX+(pressed.left?-1:0)+(pressed.right?1:0),z=joyZ+(pressed.up?-1:0)+(pressed.down?1:0),l=Math.hypot(x,z);if(l>1){x/=l;z/=l;}if(l>.05){avatar.position.x+=x*8*(crouch?.45:1)*(slide?1.5:1)*dt;avatar.position.z+=z*8*(crouch?.45:1)*(slide?1.5:1)*dt;avatar.rotation.y=Math.atan2(-x,-z);legs[0].rotation.x=Math.sin(performance.now()*.012)*.45;legs[1].rotation.x=-legs[0].rotation.x;}
+ vy-=19*dt;avatar.position.y+=vy*dt;if(avatar.position.y<=0){avatar.position.y=0;vy=0;grounded=true;}avatar.position.x=THREE.MathUtils.clamp(avatar.position.x,-98,98);avatar.position.z=THREE.MathUtils.clamp(avatar.position.z,-98,98);
+ // Third-person follow camera smoothly tracks the avatar as it moves in every direction.
+ let offset=new THREE.Vector3(0,5,9).applyQuaternion(avatar.quaternion),desired=avatar.position.clone().add(offset);camera.position.lerp(desired,1-Math.pow(.001,dt));camera.lookAt(avatar.position.clone().add(new THREE.Vector3(0,1.2,0)));
+ for(let i=coinList.length-1;i>=0;i--){let c=coinList[i];c.rotation.y+=dt*2;if(c.position.distanceTo(avatar.position)<1.25){scene.remove(c);coinList.splice(i,1);hype+=5;collected++;hud();if(collected%3===0)say('+5 HYPE COIN');}}
+ for(let i=projectiles.length-1;i>=0;i--){let p=projectiles[i];p.position.addScaledVector(p.userData.velocity,dt);if(p.position.distanceTo(avatar.position)>45){scene.remove(p);projectiles.splice(i,1);}}
+ renderer.render(scene,camera);}
+camera.position.set(0,5,14);camera.lookAt(avatar.position);hud();say('Welcome! Collect coins to earn HYPE COIN.');animate();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+</script>
+</body></html>
